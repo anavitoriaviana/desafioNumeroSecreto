@@ -1,20 +1,36 @@
+let numerosSecretos = [];
+let limiteNumeroSorteado = 10;
 let numeroSecreto = numeroAleatorio();
 let tentativas = 1;
+
 
 function textoNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', { rate: 1.2 });
 }
 
 function mensagemIncial() {
     textoNaTela('h1', 'Jogo do número secreto!');
-    textoNaTela('p', 'Chute um número de 1 à 10');
+    textoNaTela('p', `Chute um número de 1 à ${limiteNumeroSorteado}`);
 }
 
 mensagemIncial();
 
 function numeroAleatorio() {
-    return parseInt(Math.random() * 10 + 1);
+    let numeroEscolhido = parseInt(Math.random() * limiteNumeroSorteado + 1);
+    let quantidadeNumerosSecretos = numerosSecretos.length;
+
+    if (quantidadeNumerosSecretos == limiteNumeroSorteado) {
+        numerosSecretos = [];
+    }
+
+    if (numerosSecretos.includes(numeroEscolhido)) {
+        return numeroAleatorio;
+    } else {
+        numerosSecretos.push(numeroEscolhido);
+        return numeroEscolhido;
+    }
 }
 
 function verificarChute() {
